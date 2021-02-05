@@ -3,36 +3,40 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { deleteCamp, setFilter } from "../../../redux/actions/bootCampActions";
 import { BootCampFormContainer } from "./BootCampListStyled";
 
-const BootCampList = () => {
-  const dispatch = useDispatch();
+import {
+  getBootCamps,
+  getFilter,
+  selectedCamps,
+} from "../../../redux/selectors/bootCampSelectors";
+import Notification from "./Notification";
 
-  const filter = useSelector((state) => state.bootCamps.filter);
-
-  const bootCamps = useSelector((state) =>
-    state.bootCamps.bootCamps.filter((item) =>
-      item.campName.toLowerCase().includes(state.bootCamps.filter.toLowerCase())
-    )
-  );
+const BootCampList = ({ filter, bootCamps, deleteCamp, setFilter }) => {
+  console.log("re-Render");
+  // const dispatch = useDispatch();
+  // const filter = useSelector(getFilter);
+  // const bootCamps = useSelector(getBootCamps);
 
   const onHandleDelete = (e) => {
     const { id } = e.target;
-    dispatch(deleteCamp(id));
+    deleteCamp(id);
   };
   const onHandleChange = (e) => {
     const { value } = e.target;
-    dispatch(setFilter(value));
+    setFilter(value);
   };
 
   return (
     <BootCampFormContainer>
+      <h2>TEST</h2>
+      <Notification />
+
       <div className='options'>
         <h2>Bootcamps count: {bootCamps.length}</h2>
-        {!!bootCamps.length && (
-          <label>
-            Filter
-            <input type='text' onChange={onHandleChange} value={filter} />
-          </label>
-        )}
+
+        <label>
+          Filter
+          <input type='text' onChange={onHandleChange} value={filter} />
+        </label>
       </div>
 
       <ul className='campList'>
@@ -51,25 +55,23 @@ const BootCampList = () => {
   );
 };
 
-// const mapStateToProps = (state) => {
-//   return {
-//     bootCamps: state.bootCamps.bootCamps.filter((item) =>
-//       item.campName.toLowerCase().includes(state.bootCamps.filter.toLowerCase())
-//     ),
-//     filter: state.bootCamps.filter,
-//   };
-// };
+const mapStateToProps = (state) => {
+  return {
+    bootCamps: selectedCamps(state),
+    filter: state.bootCamps.filter,
+  };
+};
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     deleteCamp: (id) => {
-//       dispatch(deleteCamp(id));
-//     },
-//     setFilter: (id) => {
-//       dispatch(setFilter(id));
-//     },
-//   };
-// };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteCamp: (id) => {
+      dispatch(deleteCamp(id));
+    },
+    setFilter: (id) => {
+      dispatch(setFilter(id));
+    },
+  };
+};
 
-// export default connect(null, mapDispatchToProps)(BootCampList);
-export default BootCampList;
+export default connect(mapStateToProps, mapDispatchToProps)(BootCampList);
+// export default BootCampList;

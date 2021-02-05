@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  addNewCamp,
-  setAlert,
-} from "../../../redux/actions/bootCampActions";
-// import { deleteCamp, setAlert } from "../../../redux/actions/bootCampActions";
-
-// import { addNewCamp } from "../../../redux/slices/bootCampSlice";
-import { BootCampFormContainer } from "./BootCampFormStyled";
-
 import List from "./list/List";
-
+//actions
+import { addNewCamp, setAlert } from "../../../redux/actions/bootCampActions";
+//selectors
+import { getStudentsTutorsCourses } from "../../../redux/selectors/rootSelectors";
+import { getAlert } from "../../../redux/selectors/bootCampSelectors";
+//styles
+import { BootCampFormContainer } from "./BootCampFormStyled";
 
 const initialCamp = {
   campName: "",
@@ -21,18 +18,14 @@ const initialCamp = {
 };
 
 const BootCampForm = () => {
-  const alert = useSelector((state) => state.alert);
+  const [camp, setCamp] = useState({ ...initialCamp });
+
+  const alert = useSelector(getAlert);
+  const data = useSelector(getStudentsTutorsCourses);
   // const students = useSelector((state) => state.students.items);
   // const tutors = useSelector((state) => state.tutors.tutorItems);
   // const courses = useSelector((state) => state.courses.coursesItems);
   const dispatch = useDispatch();
-  const [camp, setCamp] = useState({ ...initialCamp });
-
-  const data = useSelector((state) => ({
-    students: state.students.items,
-    tutors: state.tutors.tutorItems,
-    courses: state.courses.coursesItems,
-  }));
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -73,8 +66,8 @@ const BootCampForm = () => {
         <label>
           Camp name
           <input
-            type="text"
-            name="campName"
+            type='text'
+            name='campName'
             onChange={onHandleChange}
             value={camp.campName}
           />
@@ -82,13 +75,13 @@ const BootCampForm = () => {
         <label>
           Camp number
           <input
-            type="text"
-            name="campNumber"
+            type='text'
+            name='campNumber'
             onChange={onHandleChange}
             value={camp.campNumber}
           />
         </label>
-        <button type="submit">Save</button>
+        <button type='submit'>Save</button>
       </form>
 
       <List
@@ -96,7 +89,7 @@ const BootCampForm = () => {
         onHandleClick={onHandleClick}
         existedList={camp.students}
         onRemove={onRemove}
-        category="students"
+        category='students'
       />
 
       <List
@@ -104,7 +97,7 @@ const BootCampForm = () => {
         onHandleClick={onHandleClick}
         existedList={camp.tutors}
         onRemove={onRemove}
-        category="tutors"
+        category='tutors'
       />
 
       <List
@@ -112,7 +105,7 @@ const BootCampForm = () => {
         onHandleClick={onHandleClick}
         existedList={camp.courses}
         onRemove={onRemove}
-        category="courses"
+        category='courses'
       />
     </BootCampFormContainer>
   );

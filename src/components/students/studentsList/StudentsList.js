@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { getStudents } from "../../../redux/selectors/studentsSelectors";
 import StudentForm from "../studentForm/StudentForm";
 import { StudentListContainer } from "./StudentsListStyled";
 
 const StudentsList = () => {
   const [isEditFormOpen, setEditFormOpen] = useState(false);
   const [data, setData] = useState({});
-  const students = useSelector((state) => state.students.items);
+
+  const students = useSelector(getStudents);
 
   const onEdit = (e) => {
     setEditFormOpen(true);
     const id = e.target.id;
     setData({ ...students.find((student) => student.id === id) });
   };
+  
   return (
     <StudentListContainer>
       <ul className='studentsList'>

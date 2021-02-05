@@ -6,30 +6,34 @@ import {
   SETFILTER,
 } from "../constants/bootCampConstants";
 
+const TEST = "@test";
+
+export const testAction = () => {
+  return {
+    type: TEST,
+  };
+};
+
 const initialState = {
-  bootCamps: [],
+  items: [],
   filter: "",
   alert: false,
+  test: false,
 };
 
 const bootCampReducer = (state = { ...initialState }, action) => {
   switch (action.type) {
     case ADDNEWCAMP:
       if (
-        state.bootCamps.some(
-          (item) => item.campName === action.payload.campName
-        )
+        state.items.some((item) => item.campName === action.payload.campName)
       ) {
         return { ...state, alert: !state.alert };
-      } else
-        return { ...state, bootCamps: [...state.bootCamps, action.payload] };
+      } else return { ...state, items: [...state.items, action.payload] };
 
     case DELETECAMP:
       return {
         ...state,
-        bootCamps: [
-          ...state.bootCamps.filter((item) => item.id !== action.payload),
-        ],
+        items: [...state.items.filter((item) => item.id !== action.payload)],
       };
     case SETFILTER:
       return {
@@ -40,6 +44,11 @@ const bootCampReducer = (state = { ...initialState }, action) => {
       return {
         ...state,
         alert: !state.alert,
+      };
+    case TEST:
+      return {
+        ...state,
+        test: !state.test,
       };
 
     default:

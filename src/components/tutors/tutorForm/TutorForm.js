@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, connect } from "react-redux";
 import { addNewTutorOperation } from "../../../redux/operations/tutorOperations";
+import { getTutorsIsLoading } from "../../../redux/selectors/tutorsSelectors";
 import { TutorFormContainer } from "./TutorFormStyled";
 
 const stackOptions = ["HTML", "Java Script", "React", "Node"];
@@ -13,8 +14,9 @@ const initialState = {
   position: "Mentor",
 };
 
-const TutorForm = () => {
-  const isLoading = useSelector((state) => state.tutors.isLoading);
+const TutorForm = ({isLoading}) => {
+  // const isLoading = useSelector(getTutorsIsLoading);
+
   const [state, setState] = useState({ ...initialState });
   const dispatch = useDispatch();
 
@@ -82,4 +84,11 @@ const TutorForm = () => {
   );
 };
 
-export default TutorForm;
+const mapStateToProps = (state) => {
+  return {
+    // isLoading: state.tutors.isLoading
+    isLoading: getTutorsIsLoading(state)
+  }
+}
+
+export default connect(mapStateToProps)(TutorForm);

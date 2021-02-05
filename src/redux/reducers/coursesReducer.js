@@ -1,7 +1,7 @@
 import { ADDNEWCOURSE, GETCOURSES } from "../constants/coursesConstants";
 
 const initialState = {
-  coursesItems: [],
+  items: [],
 };
 
 const coursesReducer = (
@@ -12,13 +12,13 @@ const coursesReducer = (
     case ADDNEWCOURSE:
       return {
         ...state,
-        coursesItems: [...state.coursesItems, payload],
+        items: [...state.items, payload],
       };
 
     case GETCOURSES:
       return {
         ...state,
-        coursesItems: payload,
+        items: payload,
       };
 
     default:

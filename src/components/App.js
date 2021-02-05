@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getCourses } from "../redux/actions/coursesActions";
-import { getStudents } from "../redux/actions/studentsActions";
-import { getTutors } from "../redux/actions/tutorsActions";
+
 import { getStudentsOperation } from "../redux/operations/studentsOperations";
 import { getTutorsOperation } from "../redux/operations/tutorOperations";
 import Navigation from "./navigation/Navigation";
@@ -13,15 +11,6 @@ const App = () => {
   useEffect(() => {
     dispatch(getTutorsOperation());
     dispatch(getStudentsOperation());
-
-    // if (localStorage.getItem("courses")) {
-    //   const courses = JSON.parse(localStorage.getItem("courses"));
-    //   dispatch(getCourses(courses));
-    // }
-    // if (localStorage.getItem("tutors")) {
-    //   const tutors = JSON.parse(localStorage.getItem("tutors"));
-    //   dispatch(getTutors(tutors));
-    // }
     // eslint-disable-next-line
   }, []);
 
@@ -33,3 +22,29 @@ const App = () => {
 };
 
 export default App;
+
+// const getSomething = () => {
+//   const arg = 5;
+//   return () => {
+//     console.log(arg);
+//   };
+// };
+
+// const newFunc = getSomething();
+
+// newFunc()
+// newFunc()
+
+// =======================================
+// let i = 10;
+// let q = 0;
+
+// const reqursion = () => {
+//   if (i !== q) {
+//     q += 1;
+//     console.log(q);
+//     reqursion();
+//   }
+// };
+
+// reqursion();

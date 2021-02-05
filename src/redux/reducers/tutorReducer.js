@@ -7,16 +7,16 @@ import {
 } from "../constants/tutorConstants";
 
 const initialState = {
-  tutorItems: [],
+  items: [],
   isLoading: false,
   error: "",
 };
 const tutorReducer = (state = { ...initialState }, { type, payload }) => {
   switch (type) {
     case ADDNEWTUTOR:
-      return { ...state, tutorItems: [...state.tutorItems, payload] };
+      return { ...state, items: [...state.items, payload] };
     case GETTUTORS:
-      return { ...state, tutorItems: [...payload] };
+      return { ...state, items: [...payload] };
     case SETLOADING:
       return { ...state, isLoading: !state.isLoading };
     case SETERROR:
@@ -24,8 +24,8 @@ const tutorReducer = (state = { ...initialState }, { type, payload }) => {
     case DELETETUTOR:
       return {
         ...state,
-        tutorItems: [
-          ...state.tutorItems.filter((tutor) => tutor.id !== payload),
+        items: [
+          ...state.items.filter((tutor) => tutor.id !== payload),
         ],
       };
 

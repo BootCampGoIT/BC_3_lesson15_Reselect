@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addNewCourse } from "../../../redux/actions/coursesActions";
+import { getCourses } from "../../../redux/selectors/coursesSelectors";
 import CourseInfo from "./courseInfo/CourseInfo";
 import ModuleInfo from "./moduleInfo/ModuleInfo";
 import SectionInfo from "./sectionInfo/SectionInfo";
@@ -37,18 +38,18 @@ const sectionInitialState = {
 };
 
 const CourseRedactor = () => {
-  const courses = useSelector((state) => state.courses.coursesItems)
+  const courses = useSelector(getCourses);
   const [course, setCourse] = useState({ ...courseInitialState });
   const [mod, setModule] = useState({ ...modulesInitialState });
   const [sec, setSection] = useState({ ...sectionInitialState });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // useEffect(() => {}, []);
 
   const onHandleSubmit = () => {
     dispatch(addNewCourse(course, courses));
-    setCourse({ ...courseInitialState })
+    setCourse({ ...courseInitialState });
   };
 
   const onHandleChange = (e) => {
